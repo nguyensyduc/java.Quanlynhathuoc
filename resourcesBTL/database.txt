@@ -1,0 +1,7 @@
+hostName = localhost
+dbName = baitapnhom
+userName = root
+password =
+jdbc = jdbc:mysql://
+port = :3306/
+kindOfDB = mysql
