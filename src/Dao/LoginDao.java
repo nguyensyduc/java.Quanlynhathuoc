@@ -6,8 +6,7 @@
 package Dao;
 
 import Entity.Login;
-import View.Dao;
-import View.MyConnection;
+import MyConnection.MyConnection;
 import java.sql.Connection;
 import java.util.List;
 import java.sql.PreparedStatement;

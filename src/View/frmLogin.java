@@ -6,6 +6,7 @@
 package View;
 
 import Dao.LoginDao;
+import Entity.Login;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class frmLogin extends javax.swing.JFrame {
     LoginDao lgDao = new LoginDao();
-    
+    Login lg = new Login();
 
     /**
      * Creates new form Login
@@ -81,10 +82,6 @@ public class frmLogin extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(36, 36, 36))
             .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -104,6 +101,10 @@ public class frmLogin extends javax.swing.JFrame {
                                 .addGap(30, 30, 30))
                             .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(25, 25, 25))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,15 +116,15 @@ public class frmLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -137,9 +138,21 @@ public class frmLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane,"Bạn phải nhập đầy đủ thông tin");
         }
         else if(lgDao.CheckLogin(username,password)==true){
-            TrangChu tc = new TrangChu();
-            tc.setVisible(true);
-            this.dispose();
+            if(username.equals("admin") && password.equals("1") ){
+                TC_Main main = new TC_Main();
+                this.dispose();
+                main.setVisible(true);
+                JOptionPane.showMessageDialog(rootPane,"Đăng nhập hệ thống thành công!");
+                
+            }
+            else if(username.equals("user") && password.equals("1") ){
+                NV_Main mainNV = new NV_Main();
+                this.dispose();
+                mainNV.setVisible(true);
+                JOptionPane.showMessageDialog(rootPane,"Đăng nhập hệ thống thành công!");
+                
+            }
+  
         }
         else{
             JOptionPane.showMessageDialog(rootPane,"Tài khoản hoặc mật khẩu không đúng");

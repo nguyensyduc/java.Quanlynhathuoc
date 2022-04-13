@@ -5,9 +5,9 @@
  */
 package Dao;
 
+
 import Entity.NhapSP;
-import View.Dao;
-import View.MyConnection;
+import MyConnection.MyConnection;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class NhapSPDao implements Dao<NhapSP>{
             ps = conn.prepareStatement(sql_getAll);
             rs = ps.executeQuery();
             while(rs.next()){
-                list.add(new NhapSP(rs.getString("masp"), rs.getString("tensp"), rs.getInt("gia"), rs.getString("donvi"),rs.getString("soLuong"), rs.getString("ngaynhap"), rs.getString("ngayhethan"),rs.getString("loadImage"),rs.getString("ncc")));
+                list.add(new NhapSP(rs.getString("masp"), rs.getString("tensp"), rs.getInt("gia"), rs.getString("donvi"),rs.getInt("soLuong"), rs.getString("ngaynhap"), rs.getString("ngayhethan"),rs.getString("loadImage"),rs.getString("ncc")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,6 +54,33 @@ public class NhapSPDao implements Dao<NhapSP>{
     public List<NhapSP> getcateid(int cateid) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public NhapSP get(String id) {
+        Connection conn = myconnection.getConnection();
+        String sql = "SELECT * FROM "+tableName+" WHERE masp = '"+id+"'";
+        ResultSet rs = null;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String tensp = rs.getString("tensp");
+                int gia = rs.getInt("gia");
+                String donvi = rs.getString("donvi");
+                int soluong = rs.getInt("soluong");
+                String ngaynhap = rs.getString("ngaynhap");
+                String ngayhh = rs.getString("ngayhethan");
+                String image = rs.getString("loadImage");
+                String ncc = rs.getString("ncc");
+                return (new NhapSP(id, tensp, gia, donvi, soluong, ngaynhap, ngayhh, image, ncc));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            myconnection.closeConnection(conn);
+        }
+        return null;
+    }
 
     @Override
     public int insert(NhapSP t) {
@@ -67,7 +94,7 @@ public class NhapSPDao implements Dao<NhapSP>{
             ps.setString(2, t.getTensp());
             ps.setInt(3, t.getGia());
             ps.setString(4, t.getDonvi());
-            ps.setString(5, t.getSoLuong());
+            ps.setInt(5, t.getSoLuong());
             ps.setString(6, t.getNgaynhap());
             ps.setString(7, t.getNgayhethan());
             ps.setString(9, t.getNcc());
@@ -128,6 +155,20 @@ public class NhapSPDao implements Dao<NhapSP>{
         }
         return list;
     }
+    public int updateSoLuong(String masp, int soluong) {
+        Connection conn = myconnection.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            String sql = "update "+tableName+" set soluong = "+soluong +" where masp='"+masp+"'";
+            ps = conn.prepareStatement(sql);
+            if(ps.executeUpdate()>0){
+                return 1;
+            }
+        } catch (Exception e) {
+        }
+        return -1;
+      }
 //    public void LoadComboBox(){
 //        Connection conn = myconnection.getConnection();
 //        PreparedStatement ps =null;
@@ -142,14 +183,16 @@ public class NhapSPDao implements Dao<NhapSP>{
 //        } catch (Exception e) {
 //        }
 //    }
-//    public static void main(String[] args) {
-//        NhapSPDao spDao = new NhapSPDao();
+    public static void main(String[] args) {
+        NhapSPDao spDao = new NhapSPDao();
+        NhapSP sp = new NhapSP("T003","",0,"",0,"","","","");
 //        NhapSP sp = new NhapSP("T003","Durex",30000,"Hop","2021-02-28","2021-09-12","aaaa");
 //        spDao.insert(sp);
 //        List<NhapSP> list = spDao.getAll();
 //        for (NhapSP c : list) {
 //            System.out.println(list);
 //        }
-//    }
+        spDao.get("T003");
+    }
     
 }

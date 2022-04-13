@@ -14,7 +14,7 @@ public class NhapSP {
     private String tensp;
     private int gia;
     private String donvi;
-    private String soLuong;
+    private int soLuong;
     private String ngaynhap;
     private String ngayhethan;
     private String loadImage;
@@ -23,7 +23,7 @@ public class NhapSP {
     public NhapSP() {
     }
 
-    public NhapSP(String masp, String tensp, int gia, String donvi, String soLuong, String ngaynhap, String ngayhethan, String loadImage, String ncc) {
+    public NhapSP(String masp, String tensp, int gia, String donvi, int soLuong, String ngaynhap, String ngayhethan, String loadImage, String ncc) {
         this.masp = masp;
         this.tensp = tensp;
         this.gia = gia;
@@ -67,11 +67,11 @@ public class NhapSP {
         this.donvi = donvi;
     }
 
-    public String getSoLuong() {
+    public int getSoLuong() {
         return soLuong;
     }
 
-    public void setSoLuong(String soLuong) {
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
 
@@ -109,7 +109,7 @@ public class NhapSP {
 
     @Override
     public String toString() {
-        return "NhapSP{" + "masp=" + masp + ", tensp=" + tensp + ", gia=" + gia + ", donvi=" + donvi + ", soLuong=" + soLuong + ", ngaynhap=" + ngaynhap + ", ngayhethan=" + ngayhethan + ", loadImage=" + loadImage + ", ncc=" + ncc + '}';
+        return tensp ;
     }
 
     

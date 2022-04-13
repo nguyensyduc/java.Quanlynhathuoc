@@ -6,8 +6,7 @@
 package Dao;
 
 import Entity.QlyNCC;
-import View.Dao;
-import View.MyConnection;
+import MyConnection.MyConnection;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +55,39 @@ public class QlyNCCDao implements Dao<QlyNCC>{
     public List<QlyNCC> getcateid(int cateid) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    public List<QlyNCC> getid(String id){
+        conn = myconnection.getConnection();
+        List<QlyNCC> list = new ArrayList<>();
+        PreparedStatement ps =null;
+        ResultSet rs = null;
+        try {
+            String sql_getAll = "Select * from "+tableName+" where mancc='"+id+"'";
+            ps = conn.prepareStatement(sql_getAll);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String tenncc = rs.getString("tenncc");
+                String diachi = rs.getString("diachi");
+                String sdt = rs.getString("sdt");
+                String email = rs.getString("email");
+                String hinhanh = rs.getString("image");
+                list.add(new QlyNCC(id, tenncc, diachi, sdt, email, email));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                if(rs!=null){
+                    rs.close();
+                }
+                if(rs==null){
+                    ps.close();
+                }
+                myconnection.closeConnection(conn);
+            } catch (Exception e) {
+            }
+        }
+        return list;
+    }
     @Override
     public int insert(QlyNCC t) {
         Connection conn = myconnection.getConnection();
@@ -103,9 +134,14 @@ public class QlyNCCDao implements Dao<QlyNCC>{
         PreparedStatement ps =null;
         ResultSet rs = null;
         try {
-            String sql_update = "update "+tableName+" set tenncc='"+t.getTenncc()+"',diachi='"+t.getDiachi()
-                    +"',sdt='"+t.getSdt()+"',email='"+t.getEmail()+"',image='"+t.getImage()+"' where mancc='"+t.getMancc()+"'";
+            String sql_update = "update "+tableName+" set tenncc=?,diachi=?,sdt=?,email=?,image=? where mancc=?";
             ps = conn.prepareStatement(sql_update);
+            ps.setString(1, t.getTenncc());
+            ps.setString(2, t.getDiachi());
+            ps.setString(3, t.getSdt());
+            ps.setString(4, t.getEmail());
+            ps.setString(5, t.getImage());
+            ps.setString(6, t.getMancc());
             if(ps.executeUpdate()>0){
                 return true;
             }

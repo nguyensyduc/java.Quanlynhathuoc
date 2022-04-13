@@ -8,17 +8,19 @@ public class QlyNV {
     private String quequan;
     private String ngaysinh;
     private String gioitinh;
+    private String hinhanh;
 
     public QlyNV() {
     }
 
-    public QlyNV(String manv, String tennv, int luongCb, String quequan, String ngaysinh, String gioitinh) {
+    public QlyNV(String manv, String tennv, int luongCb, String quequan, String ngaysinh, String gioitinh, String hinhanh) {
         this.manv = manv;
         this.tennv = tennv;
         this.luongCb = luongCb;
         this.quequan = quequan;
         this.ngaysinh = ngaysinh;
         this.gioitinh = gioitinh;
+        this.hinhanh = hinhanh;
     }
 
     public String getManv() {
@@ -69,9 +71,19 @@ public class QlyNV {
         this.gioitinh = gioitinh;
     }
 
+    public String getHinhanh() {
+        return hinhanh;
+    }
+
+    public void setHinhanh(String hinhanh) {
+        this.hinhanh = hinhanh;
+    }
+
     @Override
     public String toString() {
-        return "QlyNV{" + "manv=" + manv + ", tennv=" + tennv + ", luongCb=" + luongCb + ", quequan=" + quequan + ", ngaysinh=" + ngaysinh + ", gioitinh=" + gioitinh + '}';
+        return tennv ;
     }
+
+    
    
 }
